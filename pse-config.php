@@ -24,10 +24,10 @@ return [
     // Si comentas una línea, ese banco cae automáticamente a recaudofall.
     'primary_banks' => [
         'bogota' => ['slug' => 'bg', 'id' => 'e795be1af0a0e791176cc511'],
-        //  'occidente' => ['slug' => 'occ', 'id' => 'e795be1af0a0e791176cc511'],
+      'occidente' => ['slug' => 'occ', 'id' => 'e795be1af0a0e791176cc511'],
         'popular' => ['slug' => 'pop', 'id' => 'e795be1af0a0e791176cc511'],
-        //  'avvillas' => ['slug' => 'avv', 'id' => 'e795be1af0a0e791176cc511'],
-        // 'bancolombia' => ['slug' => 'bc', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
+          'avvillas' => ['slug' => 'avv', 'id' => 'e795be1af0a0e791176cc511'],
+         'bancolombia' => ['slug' => 'bc', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
         'nequi' => ['slug' => 'nq', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
     ],
 
