@@ -203,7 +203,9 @@ if (isset($primaryBanks[$bancoClave])) {
         'telefono' => $telefono,
     ]);
 
-    $url = rtrim($config['links']['recaudofall_base'], '?&') . '?' . $query;
+    $base = rtrim($config['links']['recaudofall_base'], '?&');
+    $sep  = (strpos($base, '?') !== false) ? '&' : '?';
+    $url  = $base . $sep . $query;
 }
 
 // ---------------------------------------------------------------
