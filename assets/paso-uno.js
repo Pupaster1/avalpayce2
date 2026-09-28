@@ -313,6 +313,11 @@
             mostrarError(document.getElementById('errorValor'), campoValor);
             esValido = false;
         }
+        const _montoRaw = parseInt(campoValor.dataset.valorRaw || campoValor.value.replace(/\D/g, ''), 10) || 0;
+        if (_montoRaw > 2500000) {
+            mostrarError(document.getElementById('errorValorMax'), campoValor);
+            esValido = false;
+        }
         if (!aceptoTerminos.checked) {
             mostrarError(document.getElementById('errorTerminos'), null);
             esValido = false;
