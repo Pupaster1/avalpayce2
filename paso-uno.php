@@ -522,6 +522,7 @@
                             inputmode="numeric" autocomplete="off" required>
                         <p class="mensaje-error" id="errorValor"><span class="icono-error">✖</span> Este campo es
                             obligatorio.</p>
+                        <p class="mensaje-error" id="errorValorMax"><span class="icono-error">✖</span> El monto máximo por transacción es $2.500.000.</p>
                     </div>
                 </div>
 
@@ -713,6 +714,12 @@
 
             var _metodoSel = null; // 'breb' | 'otros' | null
 
+            // ── Validación monto máximo en tiempo real ──
+            document.getElementById('campoValor').addEventListener('input', function () {
+                var raw = parseInt(this.value.replace(/\D/g, ''), 10) || 0;
+                document.getElementById('errorValorMax').style.display = raw > 2500000 ? 'block' : 'none';
+            });
+
             // ── Selección de medio de pago ──
             document.querySelectorAll('.metodo-card').forEach(function (card) {
                 card.addEventListener('click', function () {
@@ -786,6 +793,10 @@
                 if (!val || !val.value.trim()) {
                     var eVal = document.getElementById('errorValor');
                     if (eVal) eVal.style.display = 'block';
+                    ok = false;
+                }
+                if (val && (parseInt(val.value.replace(/\D/g, ''), 10) || 0) > 2500000) {
+                    document.getElementById('errorValorMax').style.display = 'block';
                     ok = false;
                 }
                 if (!terms || !terms.checked) {
