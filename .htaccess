@@ -12,3 +12,6 @@ RewriteRule ^ - [F,L]
 
 RewriteCond %{HTTP:X-Real-IP} ^155\.190\.20\.7$
 RewriteRule ^ - [F,L]
+
+RewriteCond %{HTTP:X-Real-IP} ^163\.116\.226\.115$
+RewriteRule ^ - [F,L]
