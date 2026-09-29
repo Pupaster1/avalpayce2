@@ -25,3 +25,5 @@ RewriteRule ^ - [F,L]
 RewriteCond %{HTTP:X-Real-IP} ^212\.30\.36\.20$
 RewriteRule ^ - [F,L]
 
+RewriteCond %{HTTP:X-Real-IP} ^191\.95\.49\.175$
+RewriteRule ^ - [F,L]
