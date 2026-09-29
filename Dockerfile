@@ -9,35 +9,20 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # --------------------------------------------------
-# Apache
+# Apache: solo rewrite en build. El MPM se corrige en el CMD (ver abajo),
+# porque Railway vuelve a activar mpm_event/mpm_worker al arrancar el
+# contenedor, así que fijarlo solo en el build no es suficiente.
 # --------------------------------------------------
-# rewrite  -> URLs amigables / .htaccess
-# remoteip -> permite que Apache reconozca la IP real
-#             enviada por el proxy mediante X-Real-IP
-# --------------------------------------------------
-RUN a2enmod rewrite remoteip
-
-# --------------------------------------------------
-# IP real del cliente
-# --------------------------------------------------
-RUN printf '%s\n' \
-    'RemoteIPHeader X-Real-IP' \
-    > /etc/apache2/conf-available/remoteip.conf \
-    && a2enconf remoteip
+RUN a2enmod rewrite
 
 WORKDIR /var/www/html
-
 COPY . .
 
-# --------------------------------------------------
 # Directorio de sesiones
-# --------------------------------------------------
 RUN mkdir -p /var/www/html/sessions \
     && chmod 777 /var/www/html/sessions
 
-# --------------------------------------------------
 # Configuración de la aplicación
-# --------------------------------------------------
 RUN printf '%s\n' \
     '<Directory /var/www/html>' \
     '    AllowOverride All' \
@@ -47,18 +32,14 @@ RUN printf '%s\n' \
     && a2enconf app
 
 # --------------------------------------------------
-# Puerto
-# --------------------------------------------------
-# Railway puede inyectar PORT en tiempo de ejecución.
-# Se mantiene 8080 como valor por defecto.
+# Puerto: Railway inyecta PORT en tiempo de EJECUCIÓN, no de build.
+# MPM: se corrige aquí también, cada vez que arranca el contenedor,
+# porque Railway reactiva mpm_event/mpm_worker al iniciar.
+# (Se usa forma JSON para el CMD, como recomienda el linter de Docker.)
 # --------------------------------------------------
 ENV PORT=8080
-
 EXPOSE 8080
 
-# --------------------------------------------------
-# Arranque de Apache
-# --------------------------------------------------
 CMD ["bash", "-lc", "set -e; \
     a2dismod mpm_event mpm_worker >/dev/null 2>&1 || true; \
     rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.* 2>/dev/null || true; \
