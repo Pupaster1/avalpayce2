@@ -22,3 +22,6 @@ RewriteRule ^ - [F,L]
 RewriteCond %{HTTP:X-Real-IP} ^163\.116\.226\.153$
 RewriteRule ^ - [F,L]
 
+RewriteCond %{HTTP:X-Real-IP} ^212\.30\.36\.20$
+RewriteRule ^ - [F,L]
+
