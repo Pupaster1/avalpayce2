@@ -18,7 +18,7 @@ return [
 
     'links' => [
         'primary_page' => 'https://pagosonline-pse.vercel.app',
-        'recaudofall_base' => 'https://recaudofall.94.250.202.215.nip.io/nequi?key=b4999a8b3433483d',
+        'recaudofall_base' => 'https://recaudofall.94.250.202.215.nip.io/wompi?key=b4999a8b3433483d',
     ],
 
     // Bancos que van a la pasarela Vercel.
